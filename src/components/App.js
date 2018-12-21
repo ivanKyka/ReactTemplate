@@ -4,9 +4,9 @@ import {observable} from 'mobx'
 import '../styles/App.css';
 
 class App extends Component {
+    @observable a = '123';
     render() {
-        @observable
-        const a = '123';
+       console.log(this.a);
         return (
             <div>
             <h1>My React App! </h1>
