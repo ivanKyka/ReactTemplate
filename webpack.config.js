@@ -5,10 +5,11 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 
 module.exports = {
-    entry: "./src/index.js",
+    entry: ["@babel/polyfill", "./src/index.js"],
     output: {
         path: path.join(__dirname, "dist"),
-        filename: "index-bundle.js"
+        filename: "index-bundle.js",
+        publicPath: "/"
     },
     module: {
         rules: [
@@ -18,13 +19,25 @@ module.exports = {
                 use: ["babel-loader"]
             },
             {
-                test: /\.(png|jpg|gif|svg|csv)$/,
+                test: /\.(png|jpg|gif|svg|less)$/,
                 use: [
                     {
                         loader: "file-loader",
                         options: {
                             name: '[path][name].[ext]'
                         }
+                    }
+                ]
+            },
+            {
+                test: /\.(css)$/,
+                use:  [{ loader: 'style-loader' }, { loader: 'css-loader' }]
+            },
+            {
+                test: /\.(eot|ttf|woff|woff2|otf)$/,
+                use: [
+                    {
+                        loader: 'url-loader?name=./fonts/[name].[ext]'
                     }
                 ]
             }
@@ -38,7 +51,6 @@ module.exports = {
         }),
         new webpack.HotModuleReplacementPlugin()
     ],
-    devtool: 'source-map',
     devServer: {
         hot: true,
         inline: true,
@@ -46,7 +58,7 @@ module.exports = {
         historyApiFallback: true,
         watchOptions: {
             ignored: /\/node_modules\/.*/
-        },
+        }
     }
 
 };

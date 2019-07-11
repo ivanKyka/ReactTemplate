@@ -1,14 +1,13 @@
 import React, { Component } from "react";
-
+import '../index.css';
 
 class App extends Component {
     render() {
-       console.log(this.a);
         return (
-            <div>
-            <h1>My React App! </h1>
-        </div>
-    );
+                <div>
+                    <h1>My React App! </h1>
+                </div>
+            );
     }
 }
 
