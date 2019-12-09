@@ -1,8 +1,7 @@
 const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 module.exports = {
     entry: ["@babel/polyfill", "./src/index.js"],
@@ -14,9 +13,9 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                use: ["babel-loader"]
+                use: ["babel-loader", "eslint-loader"]
             },
             {
                 test: /\.(png|jpg|gif|svg|less)$/,
@@ -24,7 +23,8 @@ module.exports = {
                     {
                         loader: "file-loader",
                         options: {
-                            name: '[path][name].[ext]'
+                            name: '[path][name].[ext]',
+                            context: 'src'
                         }
                     }
                 ]
@@ -45,20 +45,10 @@ module.exports = {
         ]
     },
     plugins: [
-        new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
             template: './src/index.html'
         }),
-        new webpack.HotModuleReplacementPlugin()
-    ],
-    devServer: {
-        hot: true,
-        inline: true,
-        contentBase: './',
-        historyApiFallback: true,
-        watchOptions: {
-            ignored: /\/node_modules\/.*/
-        }
-    }
+        // new FaviconsWebpackPlugin('set icon path here')
+    ]
 
 };
